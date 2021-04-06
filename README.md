@@ -1,6 +1,6 @@
 # APA102
 
-![APA102](/media/ap102.png "APA102")
+![APA102](/media/apa102.gif "APA102")
 
 This is an LED project using 240 APA102 LEDs. A dedicated 5V DC power supply is used to power an Arduino Uno as well as the LEDs.
 
