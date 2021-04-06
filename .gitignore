@@ -1,0 +1,7 @@
+.pio
+CMakeListsPrivate.txt
+cmake-build-*/ 
+
+# IntelliJ
+.idea
+*.iml
