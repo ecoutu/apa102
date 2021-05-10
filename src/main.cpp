@@ -16,6 +16,10 @@ FASTLED_USING_NAMESPACE
 #warning "Requires FastLED 3.1 or later; check github for latest code."
 #endif
 
+#define SELECTOR_PIN_1 2
+#define SELECTOR_PIN_2 4
+#define SELECTOR_PIN_3 7
+#define SELECTOR_PIN_4 8
 #define DATA_PIN    11
 #define CLK_PIN     13
 #define LED_TYPE    APA102
@@ -84,7 +88,7 @@ void juggle() {
 // List of patterns to cycle through.  Each is defined as a separate function below.
 typedef void (*SimplePatternList[])();
 
-SimplePatternList gPatterns = {juggle, rainbowWithGlitter, confetti, bpm, sinelon};
+SimplePatternList gPatterns = {rainbowWithGlitter, juggle, confetti, bpm, sinelon};
 
 void setup() {
   delay(3000); // 3 second delay for recovery
@@ -95,14 +99,31 @@ void setup() {
 
   // set master brightness control
   FastLED.setBrightness(BRIGHTNESS);
+
+  pinMode(SELECTOR_PIN_1, INPUT_PULLUP);
+  pinMode(SELECTOR_PIN_2, INPUT_PULLUP);
+  pinMode(SELECTOR_PIN_3, INPUT_PULLUP);
+  pinMode(SELECTOR_PIN_4, INPUT_PULLUP);
+}
+
+int readSelector() {
+  if (digitalRead(SELECTOR_PIN_1)) {
+    return 1;
+  } else if (digitalRead(SELECTOR_PIN_2)) {
+    return 2;
+  } else if (digitalRead(SELECTOR_PIN_3)) {
+    return 3;
+  } else if (digitalRead(SELECTOR_PIN_4)) {
+    return 4;
+  }
+  return 0;
 }
 
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 void nextPattern() {
-  // add one to the current pattern number, and wrap around at the end
-  gCurrentPatternNumber = (gCurrentPatternNumber + 1) % ARRAY_SIZE(gPatterns);
+  gCurrentPatternNumber = readSelector() % ARRAY_SIZE(gPatterns);
 }
 
 void loop() {
@@ -117,6 +138,6 @@ void loop() {
   // do some periodic updates
   EVERY_N_MILLISECONDS(20)
   { gHue++; } // slowly cycle the "base color" through the rainbow
-  EVERY_N_SECONDS(60)
+  EVERY_N_SECONDS(1)
   { nextPattern(); } // change patterns periodically
 }
