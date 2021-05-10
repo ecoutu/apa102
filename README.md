@@ -13,3 +13,5 @@ data and clock pins are connected to the Arduino Uno's 11 and 13 digital pins, r
 
 The project uses a [Sonoff 4ch WiFi Relay](https://www.itead.cc/sonoff-4ch.html) to switch between different FastLED
 presets. This integrates nicely with Google Home, allowing full control via. Google Assistant.
+
+![Hardware](/media/hardware.jpg "Hardware")
